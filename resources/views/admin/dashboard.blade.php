@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Gëstu Ndox Mi</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -37,9 +38,10 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 1.5rem 2rem;
-            display: flex;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
             align-items: center;
-            justify-content: space-between;
+            gap: 2rem;
         }
 
         .admin-brand {
@@ -82,7 +84,8 @@
         .admin-actions {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 2rem;
+            justify-self: end;
         }
 
         .btn-logout {
@@ -1062,9 +1065,429 @@
     }
 }
 
+
+
+.premium-badge {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: 0 8px 32px rgba(245, 158, 11, 0.25);
+}
+
+.btn-premium {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: 0 8px 32px rgba(245, 158, 11, 0.25);
+}
+
+.premium-modal-overlay {
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(10px);
+}
+
+.premium-modal {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    max-width: 800px;
+}
+
+.premium-modal-header {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    padding: 2rem;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.premium-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 3rem;
+}
+
+.premium-feature {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.premium-feature:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.premium-feature i {
+    font-size: 2.5rem;
+    color: #f59e0b;
+    margin-bottom: 1.5rem;
+}
+
+.premium-feature h4 {
+    color: white;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.premium-feature p {
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+.premium-pricing {
+    padding: 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(245, 158, 11, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.price-badge {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: 0 8px 32px rgba(245, 158, 11, 0.25);
+    animation: pulseBadge 2s infinite;
+}
+
+.price-badge i {
+    font-size: 1.25rem;
+}
+
+.price-period {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.btn-subscribe {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    color: white;
+    border: 2px solid #f59e0b;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    width: auto;
+    min-width: 200px;
+    justify-content: center;
+}
+
+.btn-subscribe:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    border-color: transparent;
+    box-shadow: 0 15px 30px rgba(245, 158, 11, 0.3);
+}
+
+@keyframes pulseBadge {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.premium-pricing h3 {
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.btn-subscribe {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btn-subscribe:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(245, 158, 11, 0.3);
+}
+
+
+
+.premium-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(8px);
+    z-index: 3000;
+    justify-content: center;
+    align-items: center;
+}
+
+.premium-modal {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    max-width: 600px; 
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.premium-modal-header {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    padding: 1.5rem;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.modal-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.25rem;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.premium-features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.5rem;
+}
+
+.premium-pricing {
+    padding: 1.5rem;
+    text-align: center;
+    border-top: 1px solid rgba(245, 158, 11, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    position: sticky;
+    bottom: 0;
+}
+
+.btn-subscribe {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.footer {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: white;
+    padding: 4rem 0 2rem;
+    position: relative;
+    margin-top: 4rem;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.footer-section h3::before {
+    content: '';
+    width: 4px;
+    height: 24px;
+    background: linear-gradient(to bottom, #0ea5e9, #10b981);
+    border-radius: 2px;
+}
+
+.contact-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #cbd5e1;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.contact-info:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(5px);
+    color: #0ea5e9;
+}
+
+.contact-info i {
+    color: #0ea5e9;
+    width: 20px;
+    font-size: 1.1rem;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 2rem;
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: #94a3b8;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .footer {
+        padding: 3rem 0 1.5rem;
+    }
+
+    .footer-container {
+        padding: 0 1rem;
+    }
+}
+
+.premium-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+    animation: fadeInUp 0.5s ease;
+}
+
+.premium-action-btn {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    padding: 1.5rem;
+    border-radius: 16px;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.premium-action-btn:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    border-color: #f59e0b;
+    box-shadow: 0 15px 30px rgba(245, 158, 11, 0.2);
+}
+
+.premium-action-btn i {
+    font-size: 2rem;
+    color: #f59e0b;
+    margin-bottom: 0.5rem;
+}
+
+.premium-action-btn span {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.premium-action-btn small {
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
     </style>
 </head>
-<body>
+<body data-premium="{{ auth()->user()->hasActivePremium() ? 'true' : 'false' }}">
     
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
@@ -1072,28 +1495,83 @@
 
     
     <header class="admin-header">
-        <nav class="admin-navbar">
-            <a href="/" class="admin-brand">
-                <div class="brand-icon">
-                    <i class="fas fa-tint"></i>
-                </div>
-                <div class="brand-text">
-                    <h1>Gëstu Ndox Mi</h1>
-                    <p class="brand-subtitle">Dashboard Administrateur</p>
-                </div>
-            </a>
-            
-            <div class="admin-actions">
-                <form method="POST" action="{{ route('admin.logout') }}">
-                    @csrf
-                    <button type="submit" class="btn-logout">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Déconnexion
-                    </button>
-                </form>
+    <nav class="admin-navbar">
+        <a href="/" class="admin-brand">
+            <div class="brand-icon">
+                <i class="fas fa-tint"></i>
             </div>
-        </nav>
-    </header>
+            <div class="brand-text">
+                <h1>Gëstu Ndox Mi</h1>
+                <p class="brand-subtitle">Dashboard Administrateur</p>
+            </div>
+        </a>
+        
+        <div class="admin-actions">
+            
+            <div class="premium-section">
+                @if(auth()->user()->hasActivePremium())
+                    <span class="premium-badge">
+                        <i class="fas fa-crown"></i> Premium Actif
+                    </span>
+                @else
+                    <button onclick="showPremiumModal()" class="btn-premium">
+                        <i class="fas fa-crown"></i> Passer au Premium
+                    </button>
+                @endif
+            </div>
+            
+            
+            <form method="POST" action="{{ route('admin.logout') }}">
+                @csrf
+                <button type="submit" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Déconnexion
+                </button>
+            </form>
+        </div>
+    </nav>
+</header>
+
+<!-- premium modal... -->
+<div class="premium-modal-overlay" id="premiumModalOverlay">
+    <div class="premium-modal">
+        <div class="premium-modal-header">
+            <h3><i class="fas fa-crown"></i> Fonctionnalités Premium</h3>
+            <button class="modal-close" onclick="closePremiumModal()">×</button>
+        </div>
+        
+        <div class="premium-features">
+            <div class="premium-feature">
+                <i class="fas fa-robot"></i>
+                <h4>Analyse IA</h4>
+                <p>Analyse détaillée des données par notre ChatBot intégré</p>
+            </div>
+            <div class="premium-feature">
+                <i class="fas fa-file-pdf"></i>
+                <h4>Rapports PDF</h4>
+                <p>Génération de rapports détaillés en PDF</p>
+            </div>
+            <div class="premium-feature">
+                <i class="fas fa-chart-line"></i>
+                <h4>Statistiques avancées</h4>
+                <p>Accès aux statistiques et prévisions avancées</p>
+            </div>
+        </div>
+        
+        <div class="premium-pricing">
+            <div class="price-badge">
+                <i class="fas fa-crown"></i>
+                5000 FCFA
+                <span class="price-period">/ mois</span>
+            </div>
+            
+            <button onclick="initializeWavePayment()" class="btn-subscribe">
+                <i class="fas fa-money-bill-wave"></i>
+                Payer avec Wave
+            </button>
+        </div>
+    </div>
+</div>
 
    
     <main class="admin-container">
@@ -1166,6 +1644,28 @@
             </div>
         </div>
 
+        @if(auth()->user()->hasActivePremium())
+<div class="premium-actions-grid">
+    <button onclick="generatePDF()" class="premium-action-btn">
+        <i class="fas fa-file-pdf"></i>
+        <span>Générer Rapport PDF</span>
+        <small>Export détaillé de tous les signalements</small>
+    </button>
+    
+    <button onclick="analyzeData()" class="premium-action-btn">
+        <i class="fas fa-robot"></i>
+        <span>Analyse IA</span>
+        <small>Analyse approfondie par notre ChatBot</small>
+    </button>
+    
+    <button onclick="showAdvancedStats()" class="premium-action-btn">
+        <i class="fas fa-chart-line"></i>
+        <span>Statistiques Avancées</span>
+        <small>Métriques et prévisions détaillées</small>
+    </button>
+</div>
+@endif
+
         <!-- GRAPHIQUES -->
         <div class="charts-section">
             <div class="chart-card">
@@ -1191,6 +1691,38 @@
                     <canvas id="timelineChart"></canvas>
                 </div>
             </div>
+
+            @if(auth()->user()->hasActivePremium())
+        <div class="chart-card premium-chart">
+            <div class="chart-header">
+                <h3 class="chart-title">
+                    <i class="fas fa-brain"></i>
+                    Prévisions IA
+                </h3>
+                <span class="premium-badge">
+                    <i class="fas fa-crown"></i> Premium
+                </span>
+            </div>
+            <div class="chart-container">
+                <canvas id="aiPredictionChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-card premium-chart">
+            <div class="chart-header">
+                <h3 class="chart-title">
+                    <i class="fas fa-analytics"></i>
+                    Analyse Avancée
+                </h3>
+                <span class="premium-badge">
+                    <i class="fas fa-crown"></i> Premium
+                </span>
+            </div>
+            <div class="chart-container">
+                <canvas id="advancedAnalysisChart"></canvas>
+            </div>
+        </div>
+    @endif
         </div>
 
         <div class="charts-section">
@@ -1538,7 +2070,110 @@
         </div>
     </div>
 
-    
+    <!-- Modal Premium -->
+    <div class="premium-modal-overlay" id="premiumModalOverlay">
+    <div class="premium-modal">
+        <div class="premium-modal-header">
+            <h3><i class="fas fa-crown"></i> Fonctionnalités Premium</h3>
+            <button class="modal-close" onclick="closePremiumModal()">×</button>
+        </div>
+        
+        <div class="premium-features">
+            <div class="premium-feature">
+                <i class="fas fa-robot"></i>
+                <h4>Analyse IA</h4>
+                <p>Analyse détaillée des données par notre ChatBot intégré</p>
+            </div>
+            <div class="premium-feature">
+                <i class="fas fa-file-pdf"></i>
+                <h4>Rapports PDF</h4>
+                <p>Génération de rapports détaillés en PDF</p>
+            </div>
+            <div class="premium-feature">
+                <i class="fas fa-chart-line"></i>
+                <h4>Statistiques avancées</h4>
+                <p>Accès aux statistiques et prévisions avancées</p>
+            </div>
+        </div>
+        
+        <div class="premium-pricing">
+            <div class="price-badge">
+                <i class="fas fa-crown"></i>
+                5000 FCFA
+                <span class="price-period">/ mois</span>
+            </div>
+            
+            <button onclick="initializeWavePayment()" class="btn-subscribe">
+                <i class="fas fa-money-bill-wave"></i>
+                Payer avec Wave
+            </button>
+        </div>
+    </div>
+</div>
+
+    <footer class="footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Gëstu Ndox Mi - Administration</h3>
+                <p style="color: #cbd5e1; line-height: 1.6; margin-bottom: 1.5rem;">
+                    Espace administrateur dédié à la gestion et au suivi des signalements de problèmes liés aux points d'eau au Sénégal. Visualisez, analysez et intervenez efficacement pour garantir un meilleur accès à l'eau.
+                </p>
+                <div class="contact-info">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Tableau de bord en temps réel</span>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Outils Administrateur</h3>
+                <div class="contact-info">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Carte interactive des signalements</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Statistiques détaillées</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-tasks"></i>
+                    <span>Gestion des statuts</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-bell"></i>
+                    <span>Reception signalements instantanée</span>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Support Technique</h3>
+                <div class="contact-info">
+                    <i class="fas fa-envelope"></i>
+                    <span>support@gestundoxmi.sn</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-clock"></i>
+                    <span>Disponible 24h/24, 7j/7</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Accès sécurisé</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-database"></i>
+                    <span>Sauvegarde automatique</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; {{ date('Y') }} Gëstu Ndox Mi - Interface d'administration. Tous droits réservés.</p>
+        </div>
+    </div>
+</footer>
+
+   
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
@@ -2098,129 +2733,255 @@
         }
 
         function initializeTimelineChart() {
-            const ctx = document.getElementById('timelineChart').getContext('2d');
+    const ctx = document.getElementById('timelineChart').getContext('2d');
+    
+    // Analyser les signalements par jour sur les 7 derniers jours
+    const last7Days = [];
+    const today = new Date();
+    
+    for (let i = 6; i >= 0; i--) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - i);
+        const dateStr = date.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric' });
+        
+        let pending = 0, progress = 0, resolved = 0;
+        
+        Object.values(reportsData).forEach(report => {
+            // Convertir la date du signalement en objet Date
+            const reportDate = new Date(report.created_at.split(' à')[0].split('/').reverse().join('-'));
             
-            // Analyser les signalements par jour sur les 7 derniers jours
-            const last7Days = [];
-            const today = new Date();
-            
-            for (let i = 6; i >= 0; i--) {
-                const date = new Date(today);
-                date.setDate(date.getDate() - i);
-                const dateStr = date.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric' });
-                
-                let pending = 0, progress = 0, resolved = 0;
-                
-                Object.values(reportsData).forEach(report => {
-                    // Convertir la date du signalement en objet Date
-                    const reportDate = new Date(report.created_at.split(' ')[0]); // Prend seulement la partie date
-                    
-                    // Comparer les dates...
-                    if (reportDate.toDateString() === date.toDateString()) {
-                        switch(report.statut) {
-                            case 'en attente': pending++; break;
-                            case 'en cours': progress++; break;
-                            case 'résolu': resolved++; break;
+            if (reportDate.toDateString() === date.toDateString()) {
+                switch(report.statut) {
+                    case 'en attente': pending++; break;
+                    case 'en cours': progress++; break;
+                    case 'résolu': resolved++; break;
+                }
+            }
+        });
+        
+        last7Days.push({
+            date: dateStr,
+            pending,
+            progress,
+            resolved
+        });
+    }
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: last7Days.map(d => d.date),
+            datasets: [
+                {
+                    label: 'En attente',
+                    data: last7Days.map(d => d.pending),
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                },
+                {
+                    label: 'En cours',
+                    data: last7Days.map(d => d.progress),
+                    borderColor: '#f59e0b',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                },
+                {
+                    label: 'Résolus',
+                    data: last7Days.map(d => d.resolved),
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 15,
+                        font: {
+                            family: 'Inter',
+                            size: 12
                         }
                     }
-                });
-                
-                last7Days.push({
-                    date: dateStr,
-                    pending,
-                    progress,
-                    resolved
-                });
-            }
-            
-            // Configuration du graphique
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: last7Days.map(d => d.date),
-                    datasets: [
-                        {
-                            label: 'En attente',
-                            data: last7Days.map(d => d.pending),
-                            borderColor: '#ef4444',
-                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                            tension: 0.3,
-                            fill: true
-                        },
-                        {
-                            label: 'En cours',
-                            data: last7Days.map(d => d.progress),
-                            borderColor: '#f59e0b',
-                            backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                            tension: 0.3,
-                            fill: true
-                        },
-                        {
-                            label: 'Résolus',
-                            data: last7Days.map(d => d.resolved),
-                            borderColor: '#10b981',
-                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                            tension: 0.3,
-                            fill: true
-                        }
-                    ]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff',
+                    padding: 12,
+                    mode: 'index',
+                    intersect: false,
+                    displayColors: true,
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.dataset.label}: ${context.parsed.y} signalement(s)`;
                         }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                precision: 0
-                            }
-                        }
-                    },
-                    interaction: {
-                        intersect: false,
-                        mode: 'index'
                     }
                 }
-            });
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0,
+                        font: {
+                            family: 'Inter'
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(148, 163, 184, 0.1)'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            family: 'Inter'
+                        }
+                    }
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
+            elements: {
+                point: {
+                    radius: 4,
+                    hoverRadius: 6
+                }
+            },
+            animation: {
+                duration: 2000
+            }
         }
+    });
+}
 
         function initializeZonesChart() {
-            const ctx = document.getElementById('zonesChart').getContext('2d');
-            
-            // Analyser les signalements par zone/quartier
-            const zones = {};
-            Object.values(reportsData).forEach(report => {
-                const zone = report.adresse || 'Zone non spécifiée';
-                zones[zone] = (zones[zone] || 0) + 1;
-            });
+    const ctx = document.getElementById('zonesChart').getContext('2d');
+    
+    // Définir les départements de Dakar
+    const departments = {
+        'Dakar': 0,
+        'Pikine': 0,
+        'Guédiawaye': 0,
+        'Rufisque': 0,
+        'Keur Massar': 0
+    };
 
-            // Prendre les 8 zones avec le plus de signalements
-            const topZones = Object.entries(zones)
-                .sort(([,a], [,b]) => b - a)
-                .slice(0, 8);
-
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: topZones.map(([zone]) => zone),
-                    datasets: [{
-                        label: 'Nombre de signalements',
-                        data: topZones.map(([,count]) => count),
-                        backgroundColor: '#84cc16',
-                        borderRadius: 8
-                    }]
-                }
-            });
+    // Analyser les signalements par département
+    Object.values(reportsData).forEach(report => {
+        const address = report.adresse?.toLowerCase() || '';
+        
+        // Logique de classification par département
+        if (address.includes('dakar') || address.includes('médina') || address.includes('plateau')) {
+            departments['Dakar']++;
+        } else if (address.includes('pikine') || address.includes('thiaroye')) {
+            departments['Pikine']++;
+        } else if (address.includes('guédiawaye') || address.includes('guediawaye')) {
+            departments['Guédiawaye']++;
+        } else if (address.includes('rufisque') || address.includes('bargny')) {
+            departments['Rufisque']++;
+        } else if (address.includes('keur massar') || address.includes('malika')) {
+            departments['Keur Massar']++;
+        } else {
+            // Si l'adresse ne correspond à aucun département, l'ajouter à Dakar par défaut
+            departments['Dakar']++;
         }
+    });
+
+    // graphique...
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(departments),
+            datasets: [{
+                label: 'Nombre de signalements',
+                data: Object.values(departments),
+                backgroundColor: [
+                    'rgba(14, 165, 233, 0.8)',  
+                    'rgba(245, 158, 11, 0.8)',  
+                    'rgba(16, 185, 129, 0.8)',  
+                    'rgba(139, 92, 246, 0.8)',  
+                    'rgba(239, 68, 68, 0.8)'    
+                ],
+                borderColor: [
+                    'rgb(14, 165, 233)',
+                    'rgb(245, 158, 11)',
+                    'rgb(16, 185, 129)',
+                    'rgb(139, 92, 246)',
+                    'rgb(239, 68, 68)'
+                ],
+                borderWidth: 1,
+                borderRadius: 6,
+                maxBarThickness: 50  // Limite la largeur maximale des barres
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false  
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff',
+                    padding: 12,
+                    displayColors: false,
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.parsed.y} signalement(s)`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0,
+                        font: {
+                            family: 'Inter'
+                        }
+                    },
+                    grid: {
+                        display: true,
+                        color: 'rgba(148, 163, 184, 0.1)'
+                    }
+                },
+                x: {
+                    ticks: {
+                        font: {
+                            family: 'Inter',
+                            weight: '500'
+                        }
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            animation: {
+                duration: 2000,
+                easing: 'easeInOutQuart'
+            }
+        }
+    });
+}
 
         function initializePerformanceChart() {
             const ctx = document.getElementById('performanceChart').getContext('2d');
@@ -2511,6 +3272,128 @@
 
         // Rendre la fonction openReportModal globale pour les popups de carte
         window.openReportModal = openReportModal;
+
+        
+        //premium...
+
+        function showPremiumModal() {
+            const modal = document.getElementById('premiumModalOverlay');
+            document.body.style.overflow = 'hidden';
+            modal.style.display = 'flex';
+            modal.querySelector('.premium-modal').classList.add('modal-fade-in');
+        }
+
+        function closePremiumModal() {
+            const modal = document.getElementById('premiumModalOverlay');
+            document.body.style.overflow = 'auto';
+            modal.querySelector('.premium-modal').classList.remove('modal-fade-in');
+            modal.style.display = 'none';
+        }
+
+        // Ajoutez cet écouteur d'événements
+        document.getElementById('premiumModalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePremiumModal();
+            }
+        });
+
+        async function initializeWavePayment() {
+    try {
+        showLoading();
+        const response = await fetch('/subscription/initialize', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+        
+        if (data.success && data.payment_url) {
+            console.log('Redirection vers Wave:', data.payment_url);
+            window.location.href = data.payment_url;
+        } else {
+            throw new Error(data.message || 'Erreur lors de l\'initialisation du paiement');
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert('Une erreur est survenue lors de l\'initialisation du paiement');
+    } finally {
+        hideLoading();
+    }
+}
+
+        async function generatePDF() {
+            try {
+                showLoading();
+                const response = await fetch('/premium/reports/pdf', {
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    }
+                });
+
+                if (!response.ok) throw new Error('Accès Premium requis');
+
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `rapport-gestundoxmi-${new Date().toISOString().split('T')[0]}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue lors de la génération du PDF');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        async function analyzeData() {
+            try {
+                showLoading();
+                const response = await fetch('/premium/reports/analyze', {
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    }
+                });
+
+                if (!response.ok) throw new Error('Accès Premium requis');
+
+                const data = await response.json();
+                showAnalysisModal(data.analysis);
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue lors de l\'analyse');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function initializePremiumFeatures() {
+            if (!document.querySelector('[data-premium="true"]')) return;
+
+            // Initialiser les graphiques premium
+            initializeAIPredictions();
+            initializeAdvancedAnalysis();
+        }
+
+        function initializeAIPredictions() {
+            const ctx = document.getElementById('aiPredictionChart')?.getContext('2d');
+            if (!ctx) return;
+
+            // Configuration du graphique de prévisions...
+        }
+
+        function initializeAdvancedAnalysis() {
+            const ctx = document.getElementById('advancedAnalysisChart')?.getContext('2d');
+            if (!ctx) return;
+
+            // Configuration du graphique d'analyse avancée...
+        }
     </script>
 </body>
 </html>

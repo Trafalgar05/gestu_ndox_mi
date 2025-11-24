@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'wave' => [
+        'api_key' => env('WAVE_API_KEY'),
+        'merchant_id' => env('WAVE_MERCHANT_ID'),
+        'secret_key' => env('WAVE_SECRET_KEY'),
+        'environment' => env('WAVE_ENVIRONMENT', 'sandbox'),
+    ],
+
 ];

@@ -6,6 +6,7 @@
     <title>Gëstu Ndox Mi</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <style>
         * {
             margin: 0;
@@ -1072,16 +1073,25 @@
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
                 submitBtn.disabled = true;
                 
-                // Utiliser fetch pour soumettre le formulaire...
                 fetch(this.action, {
                     method: 'POST',
                     body: new FormData(this),
                     headers: {
-                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-                    }
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'same-origin'
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(data => {
+                            throw new Error(data.message || 'Erreur lors de la soumission');
+                        });
+                    }
+                    return response.json();
+                })
                 .then(data => {
+                    console.log('Succès:', data);
                     // Cacher les actions
                     document.getElementById('form-actions').style.display = 'none';
                     
@@ -1093,20 +1103,20 @@
                     document.getElementById('step-3').innerHTML = '<i class="fas fa-check"></i>';
                 })
                 .catch(error => {
-                    console.error('Erreur:', error);
+                    console.error('Erreur détaillée:', error);
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
                     
-                    // Afficher un message d'erreur
+                    // Afficher un message d'erreur détaillé
                     const errorDiv = document.createElement('div');
                     errorDiv.className = 'alert alert-danger';
                     errorDiv.style.cssText = 'position: fixed; top: 20px; right: 20px; z-index: 9999; background: #fef2f2; border: 2px solid #ef4444; color: #991b1b; padding: 1rem; border-radius: 8px;';
-                    errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Une erreur est survenue. Veuillez réessayer.`;
+                    errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${error.message}`;
                     document.body.appendChild(errorDiv);
                     
                     setTimeout(() => {
                         document.body.removeChild(errorDiv);
-                    }, 3000);
+                    }, 5000);
                 });
             } else {
                 showValidationError(3);

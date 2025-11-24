@@ -45,4 +45,26 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+    public function hasActivePremium()
+    {
+        return $this->subscriptions()
+            ->where('is_active', true)
+            ->where('expires_at', '>', now())
+            ->exists();
+    }
+
+    public function activePlan()
+    {
+        return $this->subscriptions()
+            ->where('is_active', true)
+            ->where('expires_at', '>', now())
+            ->latest()
+            ->first();
+    }
 }

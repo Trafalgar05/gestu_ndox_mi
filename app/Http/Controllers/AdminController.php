@@ -98,9 +98,7 @@ class AdminController extends Controller
         ]);
     }
 
-    /**
-     * Notifie l'utilisateur du changement de statut de son signalement
-     */
+    
     private function notifyUserOfStatusChange(Report $report, string $oldStatus): void
     {
         try {
@@ -122,7 +120,8 @@ class AdminController extends Controller
             }
             
             // Envoi du SMS
-            $success = SmsService::send($report->telephone, $message);
+            $smsService = new SmsService();
+            $success = $smsService->send($report->telephone, $message);
             
             if ($success) {
                 Log::info("Notification de changement de statut envoyée à {$report->telephone} pour le signalement #{$report->id}");

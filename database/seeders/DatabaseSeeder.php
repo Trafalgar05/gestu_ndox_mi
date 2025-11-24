@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Report;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,11 +14,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $admin = User::factory()->create([
+            'name' => 'Admin gestu_ndox_mi',
+            'email' => 'gestundoxmi@outlook.com',
+            'password' => '@dming2025',
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        Report::create([
+            'nom' => 'Testeur Plateau',
+            'email' => 'reporter@example.com',
+            'telephone' => '+221 77 000 00 00',
+            'type_probleme' => 'fuite',
+            'description' => 'Fuite sur conduite à Dakar Plateau, proximité Place de l’Indépendance.',
+            'latitude' => 14.6753,
+            'longitude' => -17.4370,
+            'adresse' => 'Dakar Plateau, Sénégal',
+            'statut' => 'en attente',
         ]);
     }
 }

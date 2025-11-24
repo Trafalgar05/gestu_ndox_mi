@@ -20,48 +20,62 @@ class ReportController extends Controller
     // Sauvegarde du signalement
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nom' => 'required|string|max:255',
-            'email' => 'nullable|email',
-            'telephone' => 'nullable|string|max:20',
-            'type_probleme' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-            'adresse' => 'nullable|string|max:255',
-        ]);
+        try {
+            // Validation
+            $validated = $request->validate([
+                'type_probleme' => 'required|string',
+                'description' => 'nullable|string',
+                'latitude' => 'nullable|numeric',
+                'longitude' => 'nullable|numeric',
+                'adresse' => 'nullable|string',
+                'nom' => 'required|string',
+                'telephone' => 'required|string',
+                'email' => 'nullable|email'
+            ]);
 
-        $description = htmlspecialchars_decode($request->description, ENT_QUOTES);
+            if (empty($validated['latitude'])) {
+                $validated['latitude'] = 0;
+            }
+            if (empty($validated['longitude'])) {
+                $validated['longitude'] = 0;
+            }
+            $report = Report::create($validated);
 
-        // Créer le signalement
-        $report = Report::create([
-            'nom' => $validated['nom'],
-            'email' => $validated['email'],
-            'telephone' => $validated['telephone'],
-            'type_probleme' => $validated['type_probleme'],
-            'description' => $description,
-            'latitude' => $validated['latitude'],
-            'longitude' => $validated['longitude'],
-            'adresse' => $validated['adresse'],
-        ]);
-        
-        // Notifier l'administrateur du nouveau signalement
-        $this->notifyAdmin($report);
-        
-        // Envoyer un SMS de confirmation si un numéro de téléphone est fourni
-        if ($report->telephone) {
-            $this->sendSmsConfirmation($report);
+            // Envoyer le SMS immédiatement après la création
+            if ($request->telephone) {
+                $smsService = new SmsService();
+                $message = "Merci pour votre signalement sur GestuNdoxMi. Votre signalement #{$report->id} a été enregistré et sera traité dans les plus brefs délais.";
+                
+                // Log pour debug
+                \Log::info('Tentative d\'envoi de SMS', [
+                    'telephone' => $request->telephone,
+                    'message' => $message
+                ]);
+
+                $sent = $smsService->send($request->telephone, $message);
+                
+                if (!$sent) {
+                    \Log::error('Échec de l\'envoi du SMS');
+                    throw new \Exception('Erreur lors de l\'envoi du SMS');
+                }
+            }
+
+            // Notifier l'admin
+            $this->notifyAdmin($report);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Signalement enregistré avec succès',
+                'report' => $report
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('Erreur complète: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Une erreur est survenue: ' . $e->getMessage()
+            ], 500);
         }
-        
-        // Envoyer un email de confirmation si un email est fourni
-        if ($report->email) {
-            $this->sendEmailConfirmation($report);
-        }
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Signalement enregistré avec succès'
-        ]);
     }
     
     /**
@@ -99,31 +113,7 @@ class ReportController extends Controller
         }
     }
     
-    /**
-     * Envoie un SMS de confirmation à l'utilisateur
-     */
-    private function sendSmsConfirmation(Report $report)
-    {
-        try {
-            // Message à envoyer
-            $message = "Merci pour votre signalement concernant un problème d'eau. ".
-                      "Votre signalement a été enregistré avec succès. ".
-                      "Référence: #{$report->id}. ".
-                      "Nous vous tiendrons informé de son traitement.";
-            
-            // Utilisation du service SMS
-            $success = SmsService::send($report->telephone, $message);
-            
-            if ($success) {
-                Log::info("SMS de confirmation envoyé avec succès à {$report->telephone} pour le signalement #{$report->id}");
-            } else {
-                Log::warning("Échec de l'envoi du SMS de confirmation à {$report->telephone} pour le signalement #{$report->id}");
-            }
-            
-        } catch (\Exception $e) {
-            Log::error('Erreur lors de l\'envoi du SMS de confirmation: ' . $e->getMessage());
-        }
-    }
+   
     
     /**
      * Envoie un email de confirmation à l'utilisateur
